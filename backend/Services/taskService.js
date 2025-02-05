@@ -46,8 +46,11 @@ const getAllGlobal = async () => {
     .populate({
       path: "comments",
       select: "-createdAt -updatedAt",
-    })
-    .lean();
+      populate: {
+        path: "commentedBy",
+        select: "userName"
+      }
+    }).lean();
     const result = getAllTask.map(item => ({
         ...item,
         createdAt: new Date(item.createdAt).toLocaleDateString('en-GB'),
