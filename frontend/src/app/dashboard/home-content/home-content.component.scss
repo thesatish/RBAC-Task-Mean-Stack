@@ -1,0 +1,19 @@
+.scrollable-div {
+    height: 350px; /* Fixed height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ddd; /* Optional: Border for visibility */
+    padding: 10px;
+}
+
+.custom-left-col {
+    padding-left: 0 !important;
+}
+
+.custom-right-col {
+    padding-right: 0 !important;
+}
+
+.custom-col {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
