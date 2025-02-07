@@ -84,7 +84,7 @@ const userSchema = new mongoose.Schema({
         default: ''
     },
     random: mongoose.Schema.Types.Mixed, // Can store any data type
-});
+}, { timestamps: true });
 
 const User = mongoose.model('user', userSchema);
 
