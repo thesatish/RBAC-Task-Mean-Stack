@@ -5,23 +5,41 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="card-title text-center mb-4">Login</h2>
-                        <form>
-                            <div class="mb-3">
-                                <label for="username" class="form-label">Username</label>
-                                <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                            <div class="input-group">
+                              <label for="email">Email Address</label>
+                              <input
+                                id="emailId"
+                                type="email"
+                                formControlName="emailId"
+                                placeholder="Enter your email"
+                                autocomplete="off"
+                              />
+                              <div *ngIf="loginForm.get('emailId')?.touched && loginForm.get('emailId')?.invalid" class="error">
+                                <small *ngIf="loginForm.get('emailId')?.hasError('required')">Email is required.</small>
+                                <small *ngIf="loginForm.get('emailId')?.hasError('emailId')">Please enter a valid email address.</small>
+                              </div>
                             </div>
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+                        
+                            <div class="input-group">
+                              <label for="password">Password</label>
+                              <input
+                                id="password"
+                                type="password"
+                                formControlName="password"
+                                placeholder="Enter your password"
+                                autocomplete="off"
+                              />
+                              <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="error">
+                                <small *ngIf="loginForm.get('password')?.hasError('required')">Password is required.</small>
+                                <small *ngIf="loginForm.get('password')?.hasError('minlength')">
+                                  Password must be at least 6 characters long.
+                                </small>
+                              </div>
                             </div>
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberMe">
-                                <label class="form-check-label" for="rememberMe">Remember me</label>
-                            </div>
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Log In</button>
-                            </div>
-                        </form>
+                        
+                            <button type="submit" [disabled]="loginForm.invalid">Login</button>
+                          </form>
                         <div class="text-center mt-3">
                             <a href="#" class="text-decoration-none">Forgot password?</a>
                         </div>
