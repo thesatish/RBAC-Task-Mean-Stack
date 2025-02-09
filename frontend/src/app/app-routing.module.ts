@@ -28,8 +28,8 @@ const routes: Routes = [
       {
         path: 'home',
         component: HomeContentComponent,
-        // canActivate: [authGuard], 
-        // data: { roles: ['admin'] } 
+        canActivate: [authGuard], 
+        data: { role: ['user'] } 
       },
 
       {

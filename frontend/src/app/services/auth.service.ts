@@ -41,11 +41,11 @@ export class AuthService {
   loginUser(credendial:any): Observable<any> {
     return this._http.post<any>(`${this.userApi}/login`, credendial).pipe(
       tap(response => {
-        console.log("response...",response.data.data.token );
+        console.log("response..auth service.",response.data);
         if (response.data.data.token) {
           localStorage.setItem('authToken', response.data.data.token);
-          // localStorage.setItem('userRole', response.role);
-          // this.userSubject.next({ role: response.role }); // Update user state
+          localStorage.setItem('userRole', response.data.data.role);
+          this.userSubject.next({ role: response.data.data.role });
         }
       })
     );

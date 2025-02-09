@@ -10,17 +10,23 @@ export const authGuard: CanActivateFn = (route, state) => {
   return authService.AuthenticatedUser$.pipe(
     take(1),
     map(user => {
-      const allowedRoles = route.data['roles'] as string[];
+      console.log("User from Auth Guard:", user);
 
-      if (user && user.role && allowedRoles.includes(user.role)) {
+      if (!user) {
+        console.log("User is null, redirecting to login");
+        return router.createUrlTree(['/login']);
+      }
+
+      const allowedRoles = route.data['role'] as string[];
+      console.log("Allowed Roles:", allowedRoles);
+
+      if (user.role && allowedRoles.includes(user.role)) {
+        console.log("User has valid role, allowing access");
         return true;
       }
 
-      if (user) {
-        return router.createUrlTree(['/forbidden']);
-      }
-
-      return router.createUrlTree(['/login']);
+      console.log("User does not have the required role, redirecting to forbidden");
+      return router.createUrlTree(['/forbidden']);
     })
   );
 };
