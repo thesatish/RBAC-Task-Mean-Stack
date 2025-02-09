@@ -13,6 +13,14 @@ var taskSchema = new schema({
     status: {
       type: String
     },
+    priority: {
+      type: String,
+      default: "",
+    },
+    type: {
+      type: String,
+      default: "",
+    },
     isDeleted: {
       type: Boolean,
       default: false

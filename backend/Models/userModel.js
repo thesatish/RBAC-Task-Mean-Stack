@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema({
         }
     },
     role: {
-        type: Number,
+        type: String,
+        default: "user"
     },
     emailVerification: {
         type: Boolean,

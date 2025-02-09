@@ -17,6 +17,7 @@ exports.registerSchema = Joi.object({
     role: Joi.number(),
     emailVerification: Joi.boolean(),
     gender: Joi.any(),
+    userCode: Joi.required()
 });
 
 exports.loginSchema = Joi.object({
@@ -29,6 +30,8 @@ exports.taskSchema = Joi.object({
     description: Joi.string().required(),
     status: Joi.string().required(),
     isDeleted: Joi.string(),
+    priority: Joi.string(),
+    type: Joi.string()
 });
 
 exports.commentSchema = Joi.object({

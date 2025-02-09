@@ -26,31 +26,47 @@ const updateOne = async (req) => {
 const deleteOne = async (req) => {
     const result = await TaskModel.findOneAndUpdate(
         { _id: req.body._id }, { $set: { isDeleted: true } }, { new: true });
-    return { result, message: "Task Fetch Successfully" };
+    return { result, message: "Task Deleted Successfully" };
 }
 
 const deleteMultiple = async (req) => {
     let ids = req.ids;
+
     const result = await TaskModel.updateMany({ _id: { $in: ids } }, { $set: { isDeleted: true } });
-    return { result, message: "All Task Deleted Successfully" };
+    return { result, message: "All Task Have Been Deleted Successfully" };
+}
+
+const bulkUpdate = async (req) => {
+    const updates = req.body;
+    if (!updates || updates.length === 0) {
+        return res.status(400).json({ success: false, message: 'No updates provided' });
+    }
+    const bulkOps = updates.map(task => ({
+        updateOne: {
+            filter: { _id: task._id },
+            update: { $set: task }
+        }
+    }));
+    const result = await Task.bulkWrite(bulkOps);
+    return { result, message: "All Task Have Been Update Successfully" };
 }
 
 const deleteAll = async (req) => {
     const result = await TaskModel.updateMany({ userId: req.userId }, { $set: { isDeleted: true } });
-    return { result, message: "All Task Deleted Successfully" };
+    return { result, message: "All Task Have Been Deleted Successfully" };
 }
 
 const getAllGlobal = async () => {
-    const getAllTask = await TaskModel.find()
-    .populate("createdBy", "-password -token")
-    .populate({
-      path: "comments",
-      select: "-createdAt -updatedAt",
-      populate: {
-        path: "commentedBy",
-        select: "userName"
-      }
-    }).lean();
+    const getAllTask = await TaskModel.find({ isDeleted: false })
+        .populate("createdBy", "-password -token")
+        .populate({
+            path: "comments",
+            select: "-createdAt -updatedAt",
+            populate: {
+                path: "commentedBy",
+                select: "userName"
+            }
+        }).lean();
     const result = getAllTask.map(item => ({
         ...item,
         createdAt: new Date(item.createdAt).toLocaleDateString('en-GB'),
@@ -68,5 +84,6 @@ module.exports = {
     deleteOne,
     deleteMultiple,
     deleteAll,
-    getAllGlobal
+    getAllGlobal,
+    bulkUpdate
 }

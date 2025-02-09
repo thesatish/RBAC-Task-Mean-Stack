@@ -15,6 +15,7 @@ const login = async (req) => {
                 fullName: userData.fullName,
                 userName: userData.userName,
                 emailId: userData.emailId,
+                role: userData.role,
                 token: tokenData
             }
             return { userResult, message: "User Login Success" };

@@ -4,10 +4,9 @@ const taskController = require('../Controllers/taskController');
 
 
 app.post('/', taskController.createTask);
-// app.patch('/', taskController.updateTask);
-// app.patch('/delete', taskController.deleteTask);
-
-// app.get('/', taskController.getAllTaskList);
+app.patch('/', taskController.updateTask);
+app.patch('/delete', taskController.deleteTask);
+app.get('/', taskController.fetchAllTask);
 // app.get('/list', taskController.getTaskBetweenDatesAndStatus);
 
 app.get('/all', taskController.fetchTaskGlobal);
