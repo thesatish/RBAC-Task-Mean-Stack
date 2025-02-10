@@ -6,6 +6,7 @@ const taskController = require('../Controllers/taskController');
 app.post('/', taskController.createTask);
 app.patch('/', taskController.updateTask);
 app.patch('/delete', taskController.deleteTask);
+app.patch('/delete/multiple', taskController.deleteMultipleTask);
 app.get('/', taskController.fetchAllTask);
 // app.get('/list', taskController.getTaskBetweenDatesAndStatus);
 
