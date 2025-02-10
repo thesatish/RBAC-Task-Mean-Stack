@@ -12,7 +12,7 @@
     <div class="row" >
         <div class="col">
             <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"> <span class="text-danger">*</span>Title</span>
+                <span class="input-group-text"> <span class="text-danger">*</span>Title</span>
                 <input type="text" class="form-control" placeholder="Enter Title" aria-label="Username"
                     aria-describedby="basic-addon1" [(ngModel)]="task.title">
             </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="col">
             <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"> <span class="text-danger">*</span>Priority</span>
+                <span class="input-group-text"> <span class="text-danger">*</span>Priority</span>
                 <select class="form-select" aria-label="Default select example" [(ngModel)]="task.priority">
                     <option value="Highest">Highest</option>
                     <option value="High">High</option>
@@ -32,7 +32,7 @@
         </div>
         <div class="col">
             <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"> <span class="text-danger">*</span>Type</span>
+                <span class="input-group-text"> <span class="text-danger">*</span>Type</span>
                 <select class="form-select" aria-label="Default select example" [(ngModel)]="task.type">
                     <option value="Bug">Bug</option>
                     <option value="Task">Task</option>
@@ -42,7 +42,7 @@
         </div>
         <div class="col">
             <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"> <span class="text-danger">*</span>Status</span>
+                <span class="input-group-text"> <span class="text-danger">*</span>Status</span>
                 <select class="form-select" aria-label="Default select example" [(ngModel)]="task.status">
                     <option [value]="status" *ngFor="let status of statusArray"> {{status}}</option>
                 </select>
@@ -52,7 +52,7 @@
     <div class="row">
         <div class="col-5">
             <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon1"> <span class="text-danger">*</span>Description</span>
+                <span class="input-group-text"> <span class="text-danger">*</span>Description</span>
                 <textarea class="form-control" placeholder="Username" [(ngModel)]="task.description"> </textarea>
             </div>
         </div>
