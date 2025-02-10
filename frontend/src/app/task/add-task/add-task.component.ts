@@ -138,15 +138,34 @@ export class AddTaskComponent {
     this.allSelected = this.taskList.every(task => task.selected);
   }
 
-
+  //sweet alert from service
   deleteMultipleTasks() {
-    if (this.selectedTaskIds.length === 0) return;
-
-    if (confirm("Are you sure you want to delete selected tasks?")) {
-      var dlete = this.taskList.filter(task => task.selected);
-      this.selectedTaskIds = [];
-      this.allSelected = false;
-    }
+    this.toastService
+      .showConfirmationToast('Delete Item', 'Are you sure you want to delete this item?')
+      .subscribe((confirmed) => {
+        if (confirmed) {
+          this._taskService.deleteTaskMultiple(this.selectedTaskIds).subscribe(
+            (res: any) => {
+              if (res) {
+                this.toastService.showToast('success', "All Task Deleted Successfully...", "", 1000);
+                this.task = new TaskModel();
+                this.selectedTaskIds = [];
+                this.allSelected = false;
+                this.getTask();
+              }
+            },
+            (err) => {
+              this.errorMsg = err.message || "Server maintenance. Please try again later";
+              this.toastService.showAlert('error', '', this.errorMsg);
+            }
+          );
+        } else {
+          console.log('User canceled deletion.');
+          this.selectedTaskIds = [];
+          this.allSelected = false;
+          this.getTask();
+        }
+      });
   }
 
 }

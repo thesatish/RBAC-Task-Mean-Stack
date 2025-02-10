@@ -30,8 +30,7 @@ const deleteOne = async (req) => {
 }
 
 const deleteMultiple = async (req) => {
-    let ids = req.ids;
-
+    let ids = req.body;
     const result = await TaskModel.updateMany({ _id: { $in: ids } }, { $set: { isDeleted: true } });
     return { result, message: "All Task Have Been Deleted Successfully" };
 }

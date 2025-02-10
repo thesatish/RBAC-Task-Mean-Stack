@@ -48,6 +48,12 @@ export class TaskService {
       .pipe(catchError(this.handleError));
   }
 
+  deleteTaskMultiple(ids: any): Observable<any> {
+    return this._http
+      .patch<any>(`${this.taskApi}/delete/multiple`, ids)
+      .pipe(catchError(this.handleError));
+  }
+
   getTask(): Observable<any> {
     return this._http
       .get<any>(this.taskApi, this.allApis.httpOptions)
