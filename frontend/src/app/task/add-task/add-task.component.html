@@ -64,7 +64,7 @@
             </div>
         </div>
     </div>
-    <button *ngIf="selectedTaskIds.length > 1" class="btn btn-danger float-end my-2" (click)="deleteMultipleTasks()">Delete All</button>
+    <button [style.visibility]="selectedTaskIds.length > 1 ? 'visible' : 'hidden'" class="btn btn-danger float-end my-2" (click)="deleteMultipleTasks()">Delete All</button>
     <table *ngIf="!isLoading"  class="table table-striped mt-4">
         <thead>
             <tr>
