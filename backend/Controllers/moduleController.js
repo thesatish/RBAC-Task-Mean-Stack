@@ -2,7 +2,7 @@ const handleAsync = require('./utilities/handleAsync.js');
 const { taskSchema } = require('./utilities/validation.js');
 const AppError = require('./utilities/errors.js');
 const { STATUS } = require('./utilities/constant.js');
-const { create, getAll, updateOne, deleteOne, deleteMultiple } = require('../Services/taskService.js');
+const { create, getAll, updateOne, deleteOne } = require('../Services/moduleService.js');
 
 const createModule = handleAsync(async (req, res) => {
     const { error } = taskSchema.validate(req.body);

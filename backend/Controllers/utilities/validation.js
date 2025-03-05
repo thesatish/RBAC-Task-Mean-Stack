@@ -37,3 +37,10 @@ exports.taskSchema = Joi.object({
 exports.commentSchema = Joi.object({
     text: Joi.string().required(),
 });
+
+exports.moduleSchema = Joi.object({
+    name: Joi.string().required(),
+    description: Joi.string(),
+    code: Joi.string(),
+    isDeleted: Joi.boolean()
+});
