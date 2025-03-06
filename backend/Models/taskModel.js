@@ -45,4 +45,3 @@ var taskSchema = new schema({
   
   var TaskModel = mongoose.model("task", taskSchema);
   module.exports = TaskModel;
-  

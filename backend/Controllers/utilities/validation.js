@@ -44,3 +44,9 @@ exports.moduleSchema = Joi.object({
     code: Joi.string(),
     isDeleted: Joi.boolean()
 });
+
+exports.rolesAndPermissionSchema = Joi.object({
+    name: Joi.string().required(),
+    permissions: Joi.array().required(),
+    isDeleted: Joi.string()
+});

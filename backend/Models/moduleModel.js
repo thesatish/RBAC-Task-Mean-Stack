@@ -19,5 +19,5 @@ var moduleSchema = new schema({
   }
 }, { timestamps: true });
 
-var ModuleModel = mongoose.model("task", moduleSchema);
+var ModuleModel = mongoose.model("module", moduleSchema);
 module.exports = ModuleModel;

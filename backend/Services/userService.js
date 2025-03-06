@@ -9,7 +9,7 @@ const login = async (req) => {
     if (userData) {
         const truePassword = await bcryptjs.compare(password, userData.password);
         if (truePassword) {
-            const tokenData = await generateToken(userData._id, userData.role);
+            const tokenData = await generateToken(userData, userData.role);
             const userResult = {
                 _id: userData._id,
                 fullName: userData.fullName,
@@ -37,15 +37,18 @@ const register = async (req) => {
     }
     else {
         const userInsert = await User.create(req.body);
-        const tokenData = await generateToken(userInsert._id);
+        const tokenData = await generateToken(userInsert);
         userInsert.token = tokenData;
         return { userInsert, message: "User Registered Success" };
     }
 }
 
-const generateToken = async (id, role) => {
+const generateToken = async (userData) => {
     try {
-        const token = await jwt.sign({ _id: id, role: role }, process.env.SECRET_KEY);
+        const token = await jwt.sign(
+            { userId: userData._id, role: userData.role },
+            process.env.SECRET_KEY);
+
         return token;
     } catch (error) {
         res.status(400).send(error.message);
