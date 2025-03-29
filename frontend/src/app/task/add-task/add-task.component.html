@@ -22,6 +22,7 @@
             <div class="input-group mb-3">
                 <span class="input-group-text"> <span class="text-danger">*</span>Priority</span>
                 <select class="form-select" aria-label="Default select example" [(ngModel)]="task.priority">
+                    <option selected value="">Select Priority</option>
                     <option value="Highest">Highest</option>
                     <option value="High">High</option>
                     <option value="Medium">Medium</option>
@@ -34,6 +35,7 @@
             <div class="input-group mb-3">
                 <span class="input-group-text"> <span class="text-danger">*</span>Type</span>
                 <select class="form-select" aria-label="Default select example" [(ngModel)]="task.type">
+                    <option selected value="">Select Type</option>
                     <option value="Bug">Bug</option>
                     <option value="Task">Task</option>
                 </select>
@@ -44,6 +46,7 @@
             <div class="input-group mb-3">
                 <span class="input-group-text"> <span class="text-danger">*</span>Status</span>
                 <select class="form-select" aria-label="Default select example" [(ngModel)]="task.status">
+                    <option selected value="">Select Status</option>
                     <option [value]="status" *ngFor="let status of statusArray"> {{status}}</option>
                 </select>
             </div>
@@ -53,7 +56,7 @@
         <div class="col-5">
             <div class="input-group mb-3">
                 <span class="input-group-text"> <span class="text-danger">*</span>Description</span>
-                <textarea class="form-control" placeholder="Username" [(ngModel)]="task.description"> </textarea>
+                <textarea class="form-control" placeholder="Description" [(ngModel)]="task.description"> </textarea>
             </div>
         </div>
     </div>

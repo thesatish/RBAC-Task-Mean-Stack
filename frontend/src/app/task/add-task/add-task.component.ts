@@ -36,7 +36,6 @@ export class AddTaskComponent {
     this.getTask(true);
   }
   storeTask() {
-    console.log("data", this.task);
     if (!this.task.status) {
       return this.toastService.showToast('error', "Status is required", "", 2000);
 
@@ -48,7 +47,6 @@ export class AddTaskComponent {
     }
 
     if (this.button === "Add Task") {
-      console.log("data", this.task);
       this._taskService.addTask(this.task).subscribe({
         next: (res: any) => {
           this.toastService.showToast('success', "Task Added Successfully...", "", 1000);
@@ -67,6 +65,7 @@ export class AddTaskComponent {
         next: (res: any) => {
           this.task = new TaskModel();
           this.toastService.showToast('success', "Task Updated Successfully...", "", 1000);
+          this.button = "Add Task"
           this.getTask();
         },
         error: err => {
@@ -97,7 +96,7 @@ export class AddTaskComponent {
         this._taskService.deleteTask(this.task).subscribe(
           (res: any) => {
             if (res) {
-              this.toastService.showToast('success', "Task Added Successfully...", "", 1000);
+              this.toastService.showToast('success', "Task Deleted Successfully...", "", 1000);
               this.task = new TaskModel();
               this.getTask();
             }
@@ -130,7 +129,6 @@ export class AddTaskComponent {
   updateTask(index: number, field: string, event: any) {
     const newValue = event.target.innerText.trim();
     this.taskList[index][field] = newValue;
-    console.log('Updated Task:', this.taskList[index]);
   }
 
   @HostListener('document:keydown.enter', ['$event'])
@@ -173,7 +171,6 @@ export class AddTaskComponent {
             }
           );
         } else {
-          console.log('User canceled deletion.');
           this.selectedTaskIds = [];
           this.allSelected = false;
           this.getTask();
