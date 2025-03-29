@@ -1,0 +1,23 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
+import { AdminRoutingModule } from './admin-routing.module';
+import { UserManagementComponent } from './user-management/user-management.component';
+import { ModuleManagementComponent } from './module-management/module-management.component';
+import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
+
+
+@NgModule({
+  declarations: [
+    UserManagementComponent,
+    ModuleManagementComponent,
+    RolesAndPermissionsComponent
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    AdminRoutingModule
+  ]
+})
+export class AdminModule { }

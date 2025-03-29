@@ -37,6 +37,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./task/task.module').then((m) => m.TaskModule),
       },
+      {
+        path: 'admin',
+        loadChildren: () =>
+          import('./admin/admin.module').then((m) => m.AdminModule),
+      },
       { path: "**", component: NotFoundComponent },
     ],
   },
