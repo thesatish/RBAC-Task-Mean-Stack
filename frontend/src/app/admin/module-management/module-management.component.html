@@ -1,0 +1,75 @@
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="pt-3 pb-2 mb-3 border-bottom">
+        <br>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+            </div>
+        </div>
+    </div>
+    <div> Dashboard > Module > Create</div>
+    <div class="border-top"><br></div>
+    <span class="d-block p-2 mb-4 text-bg-warning"> Create Module</span>
+    <div class="row">
+        <div class="col">
+            <div class="input-group mb-3">
+                <span class="input-group-text"> <span class="text-danger">*</span>Module Name</span>
+                <input type="text" class="form-control" placeholder="Enter Name" aria-label="Username"
+                    aria-describedby="basic-addon1" [(ngModel)]="modules.name">
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <div class="input-group mb-3">
+                <span class="input-group-text"> <span class="text-danger">*</span>Description</span>
+                <textarea class="form-control" placeholder="Enter Discription" [(ngModel)]="modules.description"> </textarea>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div class="d-grid gap-1 col-2 mx-auto">
+                <button class="btn btn-primary" type="button" (click)="storeModule()"> {{button}}</button>
+            </div>
+        </div>
+    </div>
+    <button [style.visibility]="selectedTaskIds.length > 1 ? 'visible' : 'hidden'" class="btn btn-danger float-end my-2"
+        (click)="deleteModuleMultiple()">Delete All</button>
+    <table *ngIf="!isLoading" class="table table-striped mt-4">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" [(ngModel)]="allSelected" (change)="toggleAllSelection()"
+                        [disabled]="moduleList.length === 0" />
+                </th>
+                <th scope="col">S.No</th>
+                <th scope="col" style="width: 20%;">Modul Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let module of moduleList; let i = index">
+                <td>
+                    <input type="checkbox" [(ngModel)]="module.selected" (change)="updateSelection()" />
+                </td>
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ module.name }}</td>
+                <td>{{ module.description }}</td>
+                <td>{{ module.createdAt | date: 'dd-MM-yyyy hh:mm a' }}</td>
+                <td>
+                    <i (click)="editTask(i)" class="fa fa-edit text-success" title="Edit Task"></i>&nbsp;&nbsp;&nbsp;
+                    <i (click)="deleteTask(i)" class="fa fa-trash-o text-danger" title="Delete Task"></i>
+                </td>
+            </tr>
+            <tr>
+                <td *ngIf="moduleList.length === 0" class="text-center" colspan="8"> No Data </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+
+</main>

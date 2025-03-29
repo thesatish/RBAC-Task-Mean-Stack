@@ -7,12 +7,7 @@ const create = async (req) => {
 
 const getAll = async (req) => {
     const getAllTask = await ModuleModel.find({ isDeleted: false }).lean();
-    const result = getAllTask.map(item => ({
-        ...item,
-        createdAt: new Date(item.createdAt).toLocaleDateString('en-GB'),
-        updatedAt: new Date(item.updatedAt).toLocaleDateString('en-GB')
-    }));
-    return { result, message: "Module Fetched Successfully" };
+    return { result : getAllTask, message: "Module Fetched Successfully" };
 }
 
 const updateOne = async (req) => {
@@ -27,9 +22,16 @@ const deleteOne = async (req) => {
     return { result, message: "Module Deleted Successfully" };
 }
 
+const deleteMultiple = async (req) => {
+    let ids = req.body;
+    const result = await ModuleModel.updateMany({ _id: { $in: ids } }, { $set: { isDeleted: true } });
+    return { result, message: "All Module Have Been Deleted Successfully" };
+}
+
 module.exports = {
     create,
     getAll,
     updateOne,
     deleteOne,
+    deleteMultiple
 }
