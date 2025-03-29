@@ -4,6 +4,7 @@ import { TaskService } from '../task.service';
 import Swal from 'sweetalert2';
 import { ToastService } from 'src/app/services/toast.service';
 import { Location } from '@angular/common';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-add-task',
@@ -28,6 +29,7 @@ export class AddTaskComponent {
     private toastService: ToastService,
     private _taskService: TaskService,
     private _location: Location,
+    private _sharedService: SharedService
   ) { }
 
   ngOnInit() {
@@ -52,6 +54,7 @@ export class AddTaskComponent {
           this.toastService.showToast('success', "Task Added Successfully...", "", 1000);
           this.task = new TaskModel();
           this.getTask();
+          this._sharedService.triggerCountingCall();
         },
         error: err => {
           this.errorMsg = err.message || "Server maintenance. Please try again later";
