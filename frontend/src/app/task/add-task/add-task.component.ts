@@ -3,6 +3,7 @@ import { TaskModel } from '../model/task-model';
 import { TaskService } from '../task.service';
 import Swal from 'sweetalert2';
 import { ToastService } from 'src/app/services/toast.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-add-task',
@@ -19,10 +20,14 @@ export class AddTaskComponent {
   isLoading: boolean = true;
   allSelected: boolean = false;
   selectedTaskIds: string[] = [];
+  currentPage: number = 1;
+  perPage: number = 10;
+  totalPages: number = 1;
 
   constructor(
     private toastService: ToastService,
-    private _taskService: TaskService
+    private _taskService: TaskService,
+    private _location: Location,
   ) { }
 
   ngOnInit() {
@@ -105,9 +110,14 @@ export class AddTaskComponent {
 
   getTask(loader = true) {
     this.isLoading = loader;
-    this._taskService.getTask().subscribe((res: any) => {
-      console.log(res);
-      this.taskList = res.data.data;
+    const filterParams: any = {
+     page :this.currentPage,
+     limit : this.perPage
+    };
+
+    this._taskService.getTask(filterParams).subscribe((res: any) => {
+      this.taskList = res.data.data.result;
+      this.totalPages =res.data.data.total_pages
       this.isLoading = false;
     });
   }
@@ -167,6 +177,33 @@ export class AddTaskComponent {
         }
       });
   }
+
+    get paginationArray(): number[] {
+      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
+    }
+  
+    goToPage(page: number): void {
+      this.currentPage = page;
+      this.getTask();
+    }
+  
+    previousPage(): void {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.getTask();
+      }
+    }
+  
+    nextPage(): void {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.getTask();
+      }
+    }
+  
+    goBack(): void {
+      this._location.back();
+    }
 
 }
 

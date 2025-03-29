@@ -17,6 +17,28 @@ const getAll = async (req) => {
     return { result, message: "Task Fetched Successfully" };
 }
 
+const getAllWithPagination = async (req) => {
+    let { page = 1, limit = 100, isDeleted } = req.query
+    const currentPage = parseInt(page);
+    const limitParsed = parseInt(limit);
+
+    let filter = {
+        userId: req.userId,
+        isDeleted: false
+    }
+
+    let recordsTotal = await TaskModel.countDocuments(filter);
+    const getAllTask = await TaskModel.find(filter).skip(currentPage).limit(limitParsed).lean();
+    return {
+        total_pages: Math.ceil(recordsTotal / limit),
+        total_count: recordsTotal,
+        current_page: page,
+        per_page: limit,
+        result: getAllTask,
+        message: "Task Fetched Successfully"
+    };
+}
+
 const updateOne = async (req) => {
     const result = await TaskModel.findOneAndUpdate(
         { _id: req.body._id }, { $set: req.body }, { new: true });
@@ -84,5 +106,6 @@ module.exports = {
     deleteMultiple,
     deleteAll,
     getAllGlobal,
-    bulkUpdate
+    bulkUpdate,
+    getAllWithPagination
 }

@@ -54,9 +54,13 @@ export class TaskService {
       .pipe(catchError(this.handleError));
   }
 
-  getTask(): Observable<any> {
+  getTask(query: any): Observable<any> {
+    let httpParams = new HttpParams({ fromObject: query });
     return this._http
-      .get<any>(this.taskApi, this.allApis.httpOptions)
+      .get<any>(this.taskApi, {
+        ...this.allApis.httpOptions,
+        params: httpParams,
+      })
       .pipe(catchError(this.handleError));
   }
 
