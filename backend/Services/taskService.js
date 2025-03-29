@@ -1,4 +1,5 @@
 const TaskModel = require('../Models/taskModel');
+const moment = require('moment-timezone');
 
 const create = async (req) => {
     req.body["userId"] = req.userId;
@@ -18,7 +19,7 @@ const getAll = async (req) => {
 }
 
 const getAllWithPagination = async (req) => {
-    let { page = 1, limit = 100, isDeleted } = req.query
+    let { page = 1, limit = 100, isDeleted, startDate, endDate } = req.query
     const currentPage = parseInt(page);
     const limitParsed = parseInt(limit);
 
@@ -26,6 +27,21 @@ const getAllWithPagination = async (req) => {
         userId: req.userId,
         isDeleted: false
     }
+
+    if (startDate && endDate) {
+        filter.createdAt = {};
+
+        if (startDate) {
+            filter.createdAt.$gte = moment(startDate, 'MM/DD/YYYY').toDate();
+        }
+        if (endDate) {
+            filter.createdAt.$lte = moment(endDate, 'MM/DD/YYYY').endOf('day').toDate();
+        }
+    }
+    // else {
+    //     filter.updatedAt = { $gte: moment().startOf('day').toDate(), $lte: moment().endOf('day').toDate() }
+    // }
+
 
     let recordsTotal = await TaskModel.countDocuments(filter);
     const getAllTask = await TaskModel.find(filter).skip(currentPage).limit(limitParsed).lean();
