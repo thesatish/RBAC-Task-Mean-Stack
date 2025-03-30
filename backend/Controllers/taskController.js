@@ -2,7 +2,7 @@ const handleAsync = require('./utilities/handleAsync.js');
 const { taskSchema } = require('./utilities/validation.js');
 const AppError = require('./utilities/errors.js');
 const { STATUS } = require('./utilities/constant.js');
-const { create, getAllGlobal, getAll, updateOne, deleteOne, deleteMultiple, getAllWithPagination } = require('../Services/taskService.js');
+const { create, getAllGlobal, getAll, updateOne, deleteOne, deleteMultiple, getAllWithPagination, getTaskSuggestions } = require('../Services/taskService.js');
 
 const createTask = handleAsync(async (req, res) => {
     const { error } = taskSchema.validate(req.body);
@@ -20,6 +20,14 @@ const createTask = handleAsync(async (req, res) => {
 
 const fetchAllTask = handleAsync(async (req, res) => {
     const response = await getAllWithPagination(req);
+    if (!response) throw new AppError(response.message, STATUS.BAD_REQUEST);
+    return { status: STATUS.CREATED, data : response};
+});
+
+const fetchAllTaskSuggestion = handleAsync(async (req, res) => {
+    const { query } = req.query;
+    if (!query || query.length < 2) throw new AppError(response.message, STATUS.BAD_REQUEST);
+    const response = await getTaskSuggestions(req);
     if (!response) throw new AppError(response.message, STATUS.BAD_REQUEST);
     return { status: STATUS.CREATED, data : response};
 });
@@ -54,5 +62,6 @@ module.exports = {
     fetchAllTask,
     updateTask,
     deleteTask,
-    deleteMultipleTask
+    deleteMultipleTask,
+    fetchAllTaskSuggestion
 }

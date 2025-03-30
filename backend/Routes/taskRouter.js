@@ -8,6 +8,7 @@ app.patch('/', checkPermission("task", "edit"), taskController.updateTask);
 app.patch('/delete', checkPermission("task", "delete"), taskController.deleteTask);
 app.patch('/delete/multiple', taskController.deleteMultipleTask);
 app.get('/', checkPermission("task", "read"), taskController.fetchAllTask);
+app.get('/search', checkPermission("task", "read"), taskController.fetchAllTaskSuggestion);
 
 app.get('/all', taskController.fetchTaskGlobal);
 

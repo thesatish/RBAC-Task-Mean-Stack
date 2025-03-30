@@ -15,8 +15,8 @@ const userLogin = handleAsync(async (req, res) => {
 
 // User Register
 const userRegister = handleAsync(async (req, res) => {
-    const { error } = registerSchema.validate(req.body);
-    if (error) throw new AppError(error.details[0].message, STATUS.BAD_REQUEST);
+    // const { error } = registerSchema.validate(req.body);
+    // if (error) throw new AppError(error.details[0].message, STATUS.BAD_REQUEST);
     const response = await register(req);
     if (!response) throw new AppError(response.message, STATUS.BAD_REQUEST);
     return { status: STATUS.OK, message: response.message, data: response.userInsert };

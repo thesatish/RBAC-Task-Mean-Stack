@@ -44,12 +44,12 @@ const getAllWithPagination = async (req) => {
 
 
     let recordsTotal = await TaskModel.countDocuments(filter);
-    const getAllTask = await TaskModel.find(filter).skip(currentPage).limit(limitParsed).lean();
+    const getAllTask = await TaskModel.find(filter).skip((currentPage - 1) * limitParsed).limit(limitParsed).lean();
     return {
         total_pages: Math.ceil(recordsTotal / limit),
         total_count: recordsTotal,
-        current_page: page,
-        per_page: limit,
+        current_page: currentPage,
+        per_page: limitParsed,
         result: getAllTask,
         message: "Task Fetched Successfully"
     };
@@ -114,6 +114,26 @@ const getAllGlobal = async () => {
 }
 
 
+const getTaskSuggestions = async (req) => {
+    const { query } = req.query;
+    // if (!query || query.length < 2) {
+    //   return res.status(200).json({
+    //     success: true,
+    //     data: { result: [] },
+    //   });
+    // }
+
+    const regex = new RegExp(query, 'i');
+    const tasks = await TaskModel.find({ title: regex, isDeleted: false })
+      .lean();
+
+      return {
+        result: tasks,
+        message: "Task Fetched Successfully"
+    };
+  
+};
+
 module.exports = {
     create,
     getAll,
@@ -123,5 +143,6 @@ module.exports = {
     deleteAll,
     getAllGlobal,
     bulkUpdate,
-    getAllWithPagination
+    getAllWithPagination,
+    getTaskSuggestions
 }

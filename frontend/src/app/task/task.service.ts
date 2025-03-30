@@ -58,8 +58,16 @@ export class TaskService {
     let httpParams = new HttpParams({ fromObject: query });
     return this._http
       .get<any>(this.taskApi, {
-        ...this.allApis.httpOptions,
         params: httpParams,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  getTaskSearch(query: string): Observable<any> {
+    let httpParams = new HttpParams().set('query', query);
+    return this._http
+      .get<any>(`${this.taskApi}/search`, {
+        params: httpParams
       })
       .pipe(catchError(this.handleError));
   }
