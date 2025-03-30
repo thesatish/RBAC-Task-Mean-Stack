@@ -22,7 +22,7 @@ export class AddTaskComponent {
   allSelected: boolean = false;
   selectedTaskIds: string[] = [];
   currentPage: number = 1;
-  perPage: number = 10;
+  perPage: number = 25;
   totalPages: number = 1;
 
   constructor(
@@ -36,14 +36,14 @@ export class AddTaskComponent {
     this.getTask(true);
   }
   storeTask() {
-    if (!this.task.status) {
-      return this.toastService.showToast('error', "Status is required", "", 2000);
-
-    } else if (!this.task.title) {
-      return this.toastService.showToast('error', "Title is requiredd...", "", 1000);
+    if (!this.task.title) {
+      return this.toastService.showToast('error', "Title is required", "", 2000);
 
     } else if (!this.task.description) {
-      return this.toastService.showToast('error', "Description is required...", "", 1000);
+      return this.toastService.showToast('error', "Description is requiredd...", "", 1000);
+
+    } else if (!this.task.status) {
+      return this.toastService.showToast('error', "Status is required...", "", 1000);
     }
 
     if (this.button === "Add Task") {
