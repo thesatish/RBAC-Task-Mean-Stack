@@ -50,3 +50,8 @@ exports.rolesAndPermissionSchema = Joi.object({
     permissions: Joi.array().required(),
     isDeleted: Joi.string()
 });
+
+exports.roleSchema = Joi.object({
+    name: Joi.string().required(),
+    description: Joi.string(),
+});

@@ -6,13 +6,15 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { UserManagementComponent } from './user-management/user-management.component';
 import { ModuleManagementComponent } from './module-management/module-management.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
+import { RolesComponent } from './roles/roles.component';
 
 
 @NgModule({
   declarations: [
     UserManagementComponent,
     ModuleManagementComponent,
-    RolesAndPermissionsComponent
+    RolesAndPermissionsComponent,
+    RolesComponent
   ],
   imports: [
     CommonModule,

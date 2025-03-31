@@ -8,7 +8,7 @@ import {
 
 import { throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { ModuleModel } from '../admin/model/admin';
+import { ModuleModel, RolesModel } from '../admin/model/admin';
 
 import { environment } from "../../environments/environment";
 import { AllApisService } from 'src/app/services/all-apis.service';
@@ -27,35 +27,67 @@ export class AdminService {
   ) {
 
   }
-  taskApi = this.baseurl + "/module";
+  moduleApi = this.baseurl + "/module";
+  roleApi = this.baseurl + "/role";
+
 
   addModule(module: ModuleModel): Observable<any> {
     return this._http
-      .post<any>(this.taskApi, module)
+      .post<any>(this.moduleApi, module)
       .pipe(catchError(this.handleError));
   }
 
   updateModule(module: ModuleModel): Observable<any> {
     return this._http
-      .patch<any>(this.taskApi, module)
+      .patch<any>(this.moduleApi, module)
       .pipe(catchError(this.handleError));
   }
 
   deleteModule(module: ModuleModel): Observable<any> {
     return this._http
-      .patch<any>(`${this.taskApi}/delete`, module)
+      .patch<any>(`${this.moduleApi}/delete`, module)
       .pipe(catchError(this.handleError));
   }
 
   deleteModuleMultiple(ids: any): Observable<any> {
     return this._http
-      .patch<any>(`${this.taskApi}/delete/multiple`, ids)
+      .patch<any>(`${this.moduleApi}/delete/multiple`, ids)
       .pipe(catchError(this.handleError));
   }
 
   getModules(): Observable<any> {
     return this._http
-      .get<any>(this.taskApi, this.allApis.httpOptions)
+      .get<any>(this.moduleApi, this.allApis.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  addRole(module: RolesModel): Observable<any> {
+    return this._http
+      .post<any>(this.roleApi, module)
+      .pipe(catchError(this.handleError));
+  }
+
+  updateRole(module: RolesModel): Observable<any> {
+    return this._http
+      .patch<any>(this.roleApi, module)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteRole(module: RolesModel): Observable<any> {
+    return this._http
+      .patch<any>(`${this.roleApi}/delete`, module)
+      .pipe(catchError(this.handleError));
+  }
+
+  getRoles(): Observable<any> {
+    return this._http
+      .get<any>(this.roleApi, this.allApis.httpOptions)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteRoleMultiple(ids: any): Observable<any> {
+    return this._http
+      .patch<any>(`${this.roleApi}/delete/multiple`, ids)
       .pipe(catchError(this.handleError));
   }
 
