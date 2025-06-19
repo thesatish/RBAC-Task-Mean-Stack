@@ -1,0 +1,17 @@
+<app-header (toggle)="toggleSidebar()"></app-header>
+
+
+<!-- <div class="col d-flex">
+    <div class="col-2">  <app-sidebar [open]="sidebarOpen"></app-sidebar></div>
+    <div class="col-10"> <main class="main-content" (click)="sidebarOpen = false"><router-outlet></router-outlet></main></div>
+</div> -->
+
+
+
+<div class="layout-container position-relative">
+    <app-sidebar [open]="sidebarOpen"></app-sidebar>
+
+    <main class="main-content" (click)="sidebarOpen = false">
+        <router-outlet></router-outlet>
+    </main>
+</div>

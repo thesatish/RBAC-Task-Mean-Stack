@@ -1,0 +1,101 @@
+<aside class="sidebar" [class.open]="open">
+  <div class="logo-container">
+    <!-- <img src="assets/logo.png" alt="Logo" class="logo" /> -->
+    <div>SATISH SEN</div>
+  </div>
+
+  <ul class="menu">
+    <li routerLink="/dashboard/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <i class="fa-solid fa-gauge"></i> Dashboard
+    </li>
+    <li routerLink="/dashboard/settings" routerLinkActive="active">
+      <i class="fa-solid fa-gear"></i> Settings
+    </li>
+
+
+
+    <li routerLink="/dashboard/task/create" routerLinkActive="active">
+      <i class="fas fa-newspaper"></i> Task
+    </li>
+
+
+    <li routerLink="/dashboard/admin/module-management" routerLinkActive="active">
+      <i class="fas fa-cogs"></i> Module
+    </li>
+    <li routerLink="/dashboard/admin/roles" routerLinkActive="active">
+      <i class="fas fa-newspaper"></i> Role
+    </li>
+
+    <li routerLink="/dashboard/admin/roles-and-permissions" routerLinkActive="active">
+      <i class="fas fa-newspaper"></i> Permission
+    </li>
+
+    <li routerLink="/dashboard/admin/user-management" routerLinkActive="active">
+      <i class="fas fa-newspaper"></i> Users
+    </li>
+
+
+    <li routerLink="/news" routerLinkActive="active">
+      <i class="fas fa-newspaper"></i> Theme
+    </li>
+  </ul>
+</aside>
+
+
+<!-- <div class="container-fluid">
+  <div class="row">
+    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="position-sticky sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/dashboard/home" routerLinkActive="active-link">
+              <i class="bi bi-house-door"></i> Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard/admin/module-management" routerLinkActive="active-link">
+              <i class="bi bi-file-earmark"></i> Module Management
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard/admin/user-management" routerLinkActive="active-link">
+              <i class="bi bi-file-earmark"></i> User Management
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard/admin/roles" routerLinkActive="active-link">
+              <i class="bi bi-file-earmark"></i> Roles
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard/admin/roles-and-permissions" routerLinkActive="active-link">
+              <i class="bi bi-file-earmark"></i> Roles and Permissions
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard/task/create" routerLinkActive="active-link">
+              <i class="bi bi-file-earmark"></i> Task
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard/user" routerLinkActive="active-link">
+              <i class="bi bi-file-earmark"></i> Profile
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/dashboard/settings" routerLinkActive="active-link">
+              <i class="bi bi-file-earmark"></i> Settings
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" (click)="logout()">
+              <i class="bi bi-file-earmark"></i> Logout
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+
+  </div>
+</div> -->

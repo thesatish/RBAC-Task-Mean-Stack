@@ -11,7 +11,7 @@ var roleSchema = new schema({
     default: "",
   },
   code: {
-    type: String
+    type: Number
   },
   isDeleted: {
     type: Boolean,

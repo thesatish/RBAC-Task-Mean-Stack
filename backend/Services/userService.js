@@ -5,19 +5,21 @@ const User = require('../Models/userModel');
 
 const login = async (req) => {
     var { emailId, password } = req.body
-    const userData = await User.findOne({ emailId: emailId });
+    const userData = await User.findOne({ emailId: emailId }).populate("role");
     if (userData) {
         const truePassword = await bcryptjs.compare(password, userData.password);
         if (truePassword) {
-            const tokenData = await generateToken(userData, userData.role);
+            
+            const tokenData = await generateToken(userData);
             const userResult = {
                 _id: userData._id,
                 fullName: userData.fullName,
                 userName: userData.userName,
                 emailId: userData.emailId,
-                role: userData.role,
+                role: userData.role.code,
                 token: tokenData
             }
+
             return { userResult, message: "User Login Success" };
         }
         else {
@@ -46,7 +48,7 @@ const register = async (req) => {
 const generateToken = async (userData) => {
     try {
         const token = await jwt.sign(
-            { userId: userData._id, role: userData.role },
+            { userId: userData._id, role: userData.role._id },
             process.env.SECRET_KEY);
 
         return token;
@@ -64,7 +66,6 @@ const encryptedPassword = async (password) => {
         console.log("error...", error);
     }
 }
-
 
 module.exports = {
     login,

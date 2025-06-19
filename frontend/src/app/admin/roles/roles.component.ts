@@ -3,6 +3,7 @@ import { RolesModel } from '../model/admin';
 import { AdminService } from '../admin.service';
 import Swal from 'sweetalert2';
 import { ToastService } from 'src/app/services/toast.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-roles',
@@ -21,16 +22,20 @@ export class RolesComponent {
 
   constructor(
     private toastService: ToastService,
-    private _adminService: AdminService
+    private _adminService: AdminService,
+    private _sharedService: SharedService,
+
   ) { }
 
   ngOnInit() {
+    this._sharedService.setModuleId('3');
+
     this.getModules(true);
   }
   storeModule() {
     if (!this.modules.name) {
       return this.toastService.showToast('error', "Name is required", "", 2000);
-      
+
     } else if (!this.modules.description) {
       return this.toastService.showToast('error', "Description is required...", "", 1000);
     }
@@ -54,6 +59,7 @@ export class RolesComponent {
         next: (res: any) => {
           this.modules = new RolesModel();
           this.toastService.showToast('success', "Role Updated Successfully...", "", 1000);
+          this.button = "Add Role"
           this.getModules();
         },
         error: err => {

@@ -1,0 +1,18 @@
+<header class="header">
+  <button class="menu-btn d-block d-md-none" (click)="toggle.emit()">☰</button>
+  <div class="d-none d-md-block">SATISH SEN</div>
+    <div class="dropdown bg-white round">
+      <button class="btn btn-outline-light dropdown-toggle d-flex align-items-center" type="button" id="profileDropdown"
+        data-bs-toggle="dropdown" aria-expanded="false">
+        <img src="assets/images/sen.jpg" alt="User" class="rounded-circle me-2" width="32" height="32" />
+        <span class="d-none d-sm-inline text-dark">Profile</span>
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+        <li><a class="dropdown-item" routerLink="/dashboard/user">View Profile</a></li>
+        <li><a class="dropdown-item" routerLink="/dashboard/user">Settings</a></li>
+        <li><hr class="dropdown-divider" /></li>
+        <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+      </ul>
+    </div>
+</header>
+

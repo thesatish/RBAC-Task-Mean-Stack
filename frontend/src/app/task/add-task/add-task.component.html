@@ -1,126 +1,98 @@
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="pt-3 pb-2 mb-3 border-bottom">
-        <br>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
-            </div>
-        </div>
-    </div>
-    <div> Dashboard > Task > Create</div>
-    <div class="border-top"><br></div>
-    <span class="d-block p-2 mb-4 text-bg-warning"> Create Task</span>
-    <div class="row">
-        <div class="col">
-            <div class="input-group mb-3">
-                <span class="input-group-text"> <span class="text-danger">*</span>Title</span>
-                <input type="text" class="form-control" placeholder="Enter Title" aria-label="Username"
-                    aria-describedby="basic-addon1" [(ngModel)]="task.title">
-            </div>
+<section class="dashboard container-fluid">
+  <div class="mb-2">
+    <div>Dashboard > Task > Create</div>
+    <div class="border-top my-3"></div>
+    <span class="d-block p-2 mb-4 bg-warning text-dark">Create Task</span>
 
-        </div>
-        <div class="col">
-            <div class="input-group mb-3">
-                <span class="input-group-text"> <span class="text-danger">*</span>Priority</span>
-                <select class="form-select" aria-label="Default select example" [(ngModel)]="task.priority">
-                    <option selected value="">Select Priority</option>
-                    <option value="Highest">Highest</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                    <option value="Lowest">Lowest</option>
-                </select>
-            </div>
-        </div>
-        <div class="col">
-            <div class="input-group mb-3">
-                <span class="input-group-text"> <span class="text-danger">*</span>Type</span>
-                <select class="form-select" aria-label="Default select example" [(ngModel)]="task.type">
-                    <option selected value="">Select Type</option>
-                    <option value="Bug">Bug</option>
-                    <option value="Task">Task</option>
-                </select>
-            </div>
+    <div class="row g-3">
+      <div class="col-12 col-md-6 col-lg-3">
+        <label class="form-label"><span class="text-danger">*</span> Title</label>
+        <input type="text" class="form-control" placeholder="Enter Title" [(ngModel)]="task.title">
+      </div>
 
-        </div>
-        <div class="col">
-            <div class="input-group mb-3">
-                <span class="input-group-text"> <span class="text-danger">*</span>Status</span>
-                <select class="form-select" aria-label="Default select example" [(ngModel)]="task.status">
-                    <option selected value="">Select Status</option>
-                    <option [value]="status" *ngFor="let status of statusArray"> {{status}}</option>
-                </select>
-            </div>
-        </div>
+      <div class="col-12 col-md-6 col-lg-3">
+        <label class="form-label"><span class="text-danger">*</span> Priority</label>
+        <select class="form-select" [(ngModel)]="task.priority">
+          <option value="">Select Priority</option>
+          <option value="Highest">Highest</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+          <option value="Lowest">Lowest</option>
+        </select>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <label class="form-label"><span class="text-danger">*</span> Type</label>
+        <select class="form-select" [(ngModel)]="task.type">
+          <option value="">Select Type</option>
+          <option value="Bug">Bug</option>
+          <option value="Task">Task</option>
+        </select>
+      </div>
+
+      <div class="col-12 col-md-6 col-lg-3">
+        <label class="form-label"><span class="text-danger">*</span> Status</label>
+        <select class="form-select" [(ngModel)]="task.status">
+          <option value="">Select Status</option>
+          <option *ngFor="let status of statusArray" [value]="status">{{ status }}</option>
+        </select>
+      </div>
+
+      <div class="col-12">
+        <label class="form-label"><span class="text-danger">*</span> Description</label>
+        <textarea class="form-control" rows="3" placeholder="Description" [(ngModel)]="task.description"></textarea>
+      </div>
+
+      <div class="col-12 text-center">
+        <button class="btn btn-primary" (click)="storeTask()">{{ button }}</button>
+      </div>
     </div>
-    <div class="row">
-        <div class="col-5">
-            <div class="input-group mb-3">
-                <span class="input-group-text"> <span class="text-danger">*</span>Description</span>
-                <textarea class="form-control" placeholder="Description" [(ngModel)]="task.description"> </textarea>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="d-grid gap-1 col-2 mx-auto">
-                <button class="btn btn-primary" type="button" (click)="storeTask()"> {{button}}</button>
-            </div>
-        </div>
-    </div>
-    <button [style.visibility]="selectedTaskIds.length > 1 ? 'visible' : 'hidden'" class="btn btn-danger float-end my-2"
+
+    <div class="text-end mt-3">
+      <button [style.visibility]="selectedTaskIds.length > 1 ? 'visible' : 'hidden'" class="btn btn-danger"
         (click)="deleteMultipleTasks()">Delete All</button>
-    <table *ngIf="!isLoading" class="table table-striped mt-4">
+    </div>
+
+    <div class="table-responsive mt-4" *ngIf="!isLoading">
+      <table class="table table-striped">
         <thead>
-            <tr>
-                <th>
-                    <input type="checkbox" [(ngModel)]="allSelected" (change)="toggleAllSelection()"
-                        [disabled]="taskList.length === 0" />
-                </th>
-                <th scope="col">S.No</th>
-                <th scope="col" style="width: 20%;">Title</th>
-                <th scope="col">Priority</th>
-                <th scope="col">Type</th>
-                <th scope="col">Status</th>
-                <th scope="col">Created At</th>
-                <th scope="col">Action</th>
-            </tr>
+          <tr>
+            <th>
+              <input type="checkbox" [(ngModel)]="allSelected" (change)="toggleAllSelection()"
+                [disabled]="taskList.length === 0" />
+            </th>
+            <th>S.No</th>
+            <th style="width: 20%;">Title</th>
+            <th>Priority</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Created At</th>
+            <th>Action</th>
+          </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let task of taskList; let i = index">
-                <td>
-                    <input type="checkbox" [(ngModel)]="task.selected" (change)="updateSelection()" />
-                </td>
-                <!-- <th scope="row">{{ i + 1 }}</th> -->
-                <th scope="row">{{ (currentPage - 1) * perPage + i + 1 }}</th>
-
-                <td>{{ task.title }}</td>
-                <td>{{ task.priority }}</td>
-                <td>{{ task.type }}</td>
-                <td>{{ task.status }}</td>
-                <td>{{ task.createdAt  | date: 'dd-MM-yyyy hh:mm a' }}</td>
-                <td>
-                    <i (click)="editTask(i)" class="fa fa-edit text-success" title="Edit Task"></i>&nbsp;&nbsp;&nbsp;
-                    <i (click)="deleteTask(i)" class="fa fa-trash-o text-danger" title="Delete Task"></i>
-                </td>
-            </tr>
-            <tr>
-                <td *ngIf="taskList.length === 0" class="text-center" colspan="8"> No Data </td>
-            </tr>
+          <tr *ngFor="let task of taskList; let i = index">
+            <td>
+              <input type="checkbox" [(ngModel)]="task.selected" (change)="updateSelection()" />
+            </td>
+            <td>{{ (currentPage - 1) * perPage + i + 1 }}</td>
+            <td>{{ task.title }}</td>
+            <td>{{ task.priority }}</td>
+            <td>{{ task.type }}</td>
+            <td>{{ task.status }}</td>
+            <td>{{ task.createdAt | date: 'dd-MM-yyyy hh:mm a' }}</td>
+            <td>
+              <i (click)="editTask(i)" class="fa fa-edit text-success" title="Edit Task"></i>&nbsp;&nbsp;&nbsp;
+              <i (click)="deleteTask(i)" class="fa-solid fa-trash text-danger" title="Delete Task"></i>
+            </td>
+          </tr>
+          <tr *ngIf="taskList.length === 0">
+            <td class="text-center" colspan="8">No Data</td>
+          </tr>
         </tbody>
-    </table>
-
-    <nav aria-label="Page navigation example" style="margin-top: 30px;">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" [class.disabled]="currentPage === 1">
-                <a class="page-link" href="javascript:void(0)" (click)="previousPage()">Previous</a>
-            </li>
-            <li class="page-item" *ngFor="let page of paginationArray" [class.active]="page === currentPage">
-                <a class="page-link" href="javascript:void(0)" (click)="goToPage(page)">{{ page }}</a>
-            </li>
-            <li class="page-item" [class.disabled]="currentPage === totalPages">
-                <a class="page-link" href="javascript:void(0)" (click)="nextPage()">Next</a>
-            </li>
-        </ul>
-    </nav>
-
-</main>
+      </table>
+    </div>
+ <app-paginator [totalPages]="totalPages" [currentPage]="currentPage" (pageChange)="handlePageChange($event)"></app-paginator>
+  </div>
+</section>

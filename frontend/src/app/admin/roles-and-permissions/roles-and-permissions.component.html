@@ -1,1 +1,60 @@
-<p>roles-and-permissions works!</p>
+<section class="dashboard container-fluid">
+    <div class="mb-2">
+        <div>Dashboard > Roles and Permissions</div>
+        <div class="border-top my-3"></div>
+        <span class="d-block p-2 mb-4 bg-warning text-dark">Manage Roles and Permissions</span>
+        <div class="row g-3 mb-2">
+            <div class="col-12 col-md-6 col-lg-3">
+                <label class="form-label"><span class="text-danger">*</span> Role</label>
+                <select class="form-select" #roleSelect (change)="onRoleChange(roleSelect.value)">
+                    <option value="">Select Role</option>
+                    <option *ngFor="let role of roleList" [value]="role._id">{{ role.name }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="table-responsive" *ngIf="!isLoading">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+
+                        <th scope="col">S.No</th>
+                        <th scope="col">Module</th>
+                        <th scope="col">Create</th>
+                        <th scope="col">Read</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let module of rolesAndPermissionsList; let i = index">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <th scope="row">{{ module.name}}</th>
+                        <td>
+                            <ui-switch [(ngModel)]="module.actions.create"
+                                (change)="editRole(module, $event, 'create')">
+                            </ui-switch>
+                        </td>
+                        <td>
+                            <ui-switch [(ngModel)]="module.actions.read"
+                                (change)="editRole(module, $event, 'read')">
+                            </ui-switch>
+                        </td>
+                        <td>
+                            <ui-switch [(ngModel)]="module.actions.edit"
+                                (change)="editRole(module, $event, 'edit')">
+                            </ui-switch>
+                        </td>
+                        <td>
+                            <ui-switch [(ngModel)]="module.actions.delete"
+                                (change)="editRole(module, $event, 'delete')">
+                            </ui-switch>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td *ngIf="roleList.length === 0" class="text-center" colspan="6"> No Data </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

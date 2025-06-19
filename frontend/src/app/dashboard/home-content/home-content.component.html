@@ -1,92 +1,82 @@
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="pt-3 pb-2 mb-3 border-bottom">
-        <br>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <div class="btn-group me-2">
+<section class="dashboard">
+  <div> Dashboard > Home </div>
+  <div class="border-top"><br></div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col custom-col">
+          <div class="card text-white bg-primary">
+            <div class="card-body">
+              <h5 class="card-title">Total Task</h5>
+              <p class="card-text display-4">150</p>
             </div>
+          </div>
         </div>
+        <div class="col custom-right-col">
+          <div class="card text-white bg-secondary">
+            <div class="card-body">
+              <h5 class="card-title">Your Task</h5>
+              <p class="card-text display-4">50</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col custom-col">
+          <div class="card text-white bg-warning">
+            <div class="card-body">
+              <h5 class="card-title">Your Pending Task</h5>
+              <p class="card-text display-4">35</p>
+            </div>
+          </div>
+        </div>
+        <div class="col custom-right-col">
+          <div class="card text-white bg-success">
+            <div class="card-body">
+              <h5 class="card-title">Your Completd Task</h5>
+              <p class="card-text display-4">15</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
+
+      <div class="row">
+        <div class="card text-white bg-danger">
+          <div class="card-body">
+            <h5 class="card-title text-center">Your Pending Task</h5>
+          </div>
+        </div>
+        <div class="scrollable-div" (scroll)="onScroll($event)">
+          <p *ngFor="let task of taskList; let i = index"> {{ i + 1 }} {{ task.title }}</p>
+        </div>
+
+      </div>
+
+
     </div>
-    <div> Dashboard > Home </div>
-    <div class="border-top"><br></div>
-
-    <div class="row">
-        <div class="col-md-6">
-            <div class="row">
-                <div class="col custom-col">
-                    <div class="card text-white bg-primary">
-                        <div class="card-body">
-                            <h5 class="card-title">Total Task</h5>
-                            <p class="card-text display-4">150</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col custom-right-col">
-                    <div class="card text-white bg-secondary">
-                        <div class="card-body">
-                            <h5 class="card-title">Your Task</h5>
-                            <p class="card-text display-4">50</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col custom-col">
-                    <div class="card text-white bg-warning">
-                        <div class="card-body">
-                            <h5 class="card-title">Your Pending Task</h5>
-                            <p class="card-text display-4">35</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col custom-right-col">
-                    <div class="card text-white bg-success">
-                        <div class="card-body">
-                            <h5 class="card-title">Your Completd Task</h5>
-                            <p class="card-text display-4">15</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <br>
-
-            <div class="row">
-                <div class="card text-white bg-danger">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Your Pending Task</h5>
-                    </div>
-                </div>
-                <div class="scrollable-div" (scroll)="onScroll($event)">
-                    <p *ngFor="let task of taskList; let i = index"> {{ i + 1 }} {{ task.title }}</p>
-                </div>
-
-            </div>
-
-
+    <div class="col-md-5 border-start border-primary ps-3">
+      <div class="card text-dark bg-warning">
+        <div class="card-body">
+          <h5 class="card-title text-center">Task Create By All Users</h5>
         </div>
-        <div class="col-md-5 border-start border-primary ps-3">
-            <div class="card text-dark bg-warning">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Task Create By All Users</h5>
-                </div>
-            </div>
-            <div class="search-container">
-                <input type="text" class="search-input" [(ngModel)]="searchQuery" (input)="onSearch($event)"
-                    placeholder="Search tasks..." />
-                <div *ngIf="suggestions.length > 0" class="suggestions-list">
-                    <p *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
-                        {{ suggestion.title }}
-                    </p>
-                </div>
-                <div *ngIf="suggestions.length === 0 && searchQuery" class="no-results">
-                    No results found.
-                </div>
-            </div>
+      </div>
+      <div class="search-container">
+        <input type="text" class="search-input" [(ngModel)]="searchQuery" (input)="onSearch($event)"
+          placeholder="Search tasks..." />
+        <div *ngIf="suggestions.length > 0" class="suggestions-list">
+          <p *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)">
+            {{ suggestion.title }}
+          </p>
         </div>
+        <div *ngIf="suggestions.length === 0 && searchQuery" class="no-results">
+          No results found.
+        </div>
+      </div>
     </div>
+  </div>
 
-
-
-
-</main>
+</section>

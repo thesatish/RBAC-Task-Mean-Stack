@@ -26,6 +26,7 @@ export class HomeContentComponent {
   ) { }
 
   ngOnInit(): void {
+    // this._sharedService.setModuleId('0');
     this.subscription?.unsubscribe();
     this.subscription = this._sharedService.onCountCall$.subscribe(() => {
       console.log("🔥 I am subscribed! Event received!");

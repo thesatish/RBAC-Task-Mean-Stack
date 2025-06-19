@@ -38,10 +38,10 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  loginUser(credendial:any): Observable<any> {
+  loginUser(credendial: any): Observable<any> {
     return this._http.post<any>(`${this.userApi}/login`, credendial).pipe(
       tap(response => {
-        console.log("response..auth service.",response.data);
+        console.log("response..auth service.", response.data);
         if (response.data.data.token) {
           localStorage.setItem('authToken', response.data.data.token);
           localStorage.setItem('userRole', response.data.data.role);

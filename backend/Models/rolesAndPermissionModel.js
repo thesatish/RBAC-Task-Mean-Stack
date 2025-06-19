@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const schema = mongoose.Schema;
 
 const RolesAndPermissionSchema = new schema({
-  name: String,
+  name: Number,
   permissions: [
     {
-      module: String,
+      module:  { type: mongoose.Schema.Types.ObjectId, ref: "module" },
       actions: {
         create: { type: Boolean, default: false },
         edit: { type: Boolean, default: false },
@@ -14,6 +14,7 @@ const RolesAndPermissionSchema = new schema({
       },
     }
   ],
+  role: { type: mongoose.Schema.Types.ObjectId, ref: "role" },
   isDeleted: {
     type: Boolean,
     default: false

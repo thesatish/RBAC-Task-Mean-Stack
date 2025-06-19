@@ -4,13 +4,11 @@ const userSchema = new mongoose.Schema({
     fullName: String, // String type
     userName: {
         type: String,
-    },
-    userCode: {
-        type: String,
-        unique : true        
+        default: ""
     },
     emailId: {
         type: String,
+        unique: true,
         required: [true, "Email ID should not be blank"]
     },
     password: {
@@ -19,16 +17,13 @@ const userSchema = new mongoose.Schema({
     gender: {
         type: String,
         enum: {
-            values: ["Male", "Female", "Other"]
+            values: ["Male", "Female", "Others"]
         }
     },
-    role: {
+    status: {
         type: String,
-        enum: {
-            values: ["admin", "accountant", "reporter", "viewer", "user"]
-        },
-        default: "user"
     },
+    role: { type: mongoose.Schema.Types.ObjectId, ref: "role" },
     emailVerification: {
         type: Boolean,
         default: false

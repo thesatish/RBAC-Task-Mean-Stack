@@ -3,6 +3,7 @@ import { ModuleModel } from '../model/admin';
 import { AdminService } from '../admin.service';
 import Swal from 'sweetalert2';
 import { ToastService } from 'src/app/services/toast.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-module-management',
@@ -22,16 +23,19 @@ export class ModuleManagementComponent {
 
   constructor(
     private toastService: ToastService,
-    private _adminService: AdminService
+    private _adminService: AdminService,
+    private _sharedService: SharedService
+
   ) { }
 
   ngOnInit() {
+    this._sharedService.setModuleId('7');
     this.getModules(true);
   }
   storeModule() {
     if (!this.modules.name) {
       return this.toastService.showToast('error', "Name is required", "", 2000);
-      
+
     } else if (!this.modules.description) {
       return this.toastService.showToast('error', "Description is required...", "", 1000);
     }
@@ -55,6 +59,8 @@ export class ModuleManagementComponent {
         next: (res: any) => {
           this.modules = new ModuleModel();
           this.toastService.showToast('success', "Task Updated Successfully...", "", 1000);
+          console.log("i am here");
+          this.button = "Add Module"
           this.getModules();
         },
         error: err => {

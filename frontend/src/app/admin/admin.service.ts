@@ -4,12 +4,12 @@ import { Router } from "@angular/router";
 import {
   HttpClient,
   HttpErrorResponse,
+  HttpParams
 } from "@angular/common/http";
 
 import { throwError } from "rxjs";
 import { catchError, map } from "rxjs/operators";
-import { ModuleModel, RolesModel } from '../admin/model/admin';
-
+import { ModuleModel, RolesModel, UserModel } from '../admin/model/admin';
 import { environment } from "../../environments/environment";
 import { AllApisService } from 'src/app/services/all-apis.service';
 
@@ -29,6 +29,9 @@ export class AdminService {
   }
   moduleApi = this.baseurl + "/module";
   roleApi = this.baseurl + "/role";
+  userApi = this.baseurl + "/user";
+  authApi = this.baseurl + "/auth";
+  roleAndPermissionApi = this.baseurl + "/roleAndPermission";
 
 
   addModule(module: ModuleModel): Observable<any> {
@@ -88,6 +91,57 @@ export class AdminService {
   deleteRoleMultiple(ids: any): Observable<any> {
     return this._http
       .patch<any>(`${this.roleApi}/delete/multiple`, ids)
+      .pipe(catchError(this.handleError));
+  }
+
+  addUser(user: UserModel): Observable<any> {
+    return this._http
+      .post<any>(`${this.userApi}/register`, user)
+
+      .pipe(catchError(this.handleError));
+  }
+
+  updateUser(user: UserModel): Observable<any> {
+    return this._http
+      .patch<any>(this.userApi, user)
+      .pipe(catchError(this.handleError));
+  }
+
+  deleteUser(user: UserModel): Observable<any> {
+    return this._http
+      .patch<any>(`${this.userApi}/delete`, user)
+      .pipe(catchError(this.handleError));
+  }
+
+  getUsers(query: any): Observable<any> {
+    let httpParams = new HttpParams({ fromObject: query });
+    return this._http
+      .get<any>(this.authApi, {
+        params: httpParams,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  // getRolesAndPermission(query: any): Observable<any> {
+  //   let httpParams = new HttpParams({ fromObject: query });
+  //   console.log("this.roleAndPermissionApi:::::", this.roleAndPermissionApi)
+  //   return this._http
+  //     .get<any>(`${this.roleAndPermissionApi}/permission`, {
+  //       params: httpParams,
+  //     })
+  //     .pipe(catchError(this.handleError));
+  // }
+
+  getRolesAndPermission(id: any): Observable<any> {
+    return this._http
+      .get<any>(`${this.roleAndPermissionApi}/getById/${id}`, {
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  updateRolesAndPermission(moduleId: any, body: any): Observable<any> {
+    return this._http
+      .patch<any>(`${this.roleAndPermissionApi}/edit/${moduleId}`, body)
       .pipe(catchError(this.handleError));
   }
 

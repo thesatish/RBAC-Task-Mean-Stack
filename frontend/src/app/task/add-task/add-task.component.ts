@@ -24,6 +24,7 @@ export class AddTaskComponent {
   currentPage: number = 1;
   perPage: number = 25;
   totalPages: number = 1;
+  module : string = '1'
 
   constructor(
     private toastService: ToastService,
@@ -33,6 +34,7 @@ export class AddTaskComponent {
   ) { }
 
   ngOnInit() {
+    this._sharedService.setModuleId('1');
     this.getTask(true);
   }
   storeTask() {
@@ -204,6 +206,12 @@ export class AddTaskComponent {
     goBack(): void {
       this._location.back();
     }
+
+
+  handlePageChange(page: number) {
+    this.currentPage = page;
+    this.getTask(true);
+  }
 
 }
 

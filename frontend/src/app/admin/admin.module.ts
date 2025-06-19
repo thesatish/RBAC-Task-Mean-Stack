@@ -7,6 +7,7 @@ import { UserManagementComponent } from './user-management/user-management.compo
 import { ModuleManagementComponent } from './module-management/module-management.component';
 import { RolesAndPermissionsComponent } from './roles-and-permissions/roles-and-permissions.component';
 import { RolesComponent } from './roles/roles.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { RolesComponent } from './roles/roles.component';
   imports: [
     CommonModule,
     FormsModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    SharedModule
   ]
 })
 export class AdminModule { }

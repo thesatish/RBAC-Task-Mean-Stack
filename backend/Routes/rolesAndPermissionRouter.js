@@ -1,10 +1,9 @@
 const express = require("express");
 const app = express.Router();
-const moduleController = require('../Controllers/rolesAndPermissionController');
+const roleAndPrmissionController = require('../Controllers/rolesAndPermissionController');
+const { checkPermission } = require("../Middleware/permission");
 
-app.post('/', moduleController.createRoleAndPermission);
-app.get('/', moduleController.fetchRoleAndPermission);
-app.patch('/', moduleController.updateRoleAndPermission);
-app.patch('/delete', moduleController.deleteRoleAndPermission);
+app.get('/getById/:id', checkPermission('read'), roleAndPrmissionController.fetchRoleAndPermissionById);
+app.patch('/edit/:moduleId', checkPermission('edit'), roleAndPrmissionController.updateRoleAndPermission);
 
 module.exports = app;
