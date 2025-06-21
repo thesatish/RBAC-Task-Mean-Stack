@@ -44,50 +44,43 @@ export class UserManagementComponent {
 
   }
   saveUser() {
-    if (!this.user.userName) {
-      return this.toastService.showToast('error', "Name is required", "", 2000);
+    const requiredFields: { key: keyof UserModel; message: string }[] = [
+      { key: 'userName', message: 'Name is required' },
+      { key: 'emailId', message: 'Email is required' },
+      { key: 'role', message: 'Role is required' },
+      { key: 'gender', message: 'Gender is required' },
+      { key: 'status', message: 'Status is required' }
+    ];
 
-    } else if (!this.user.emailId) {
-      return this.toastService.showToast('error', "Email is requiredd...", "", 1000);
-
-    } else if (!this.user.role) {
-      return this.toastService.showToast('error', "Role is required...", "", 1000);
-
-    } else if (!this.user.gender) {
-      return this.toastService.showToast('error', "Gender is required...", "", 1000);
-
-    } else if (!this.user.status) {
-      return this.toastService.showToast('error', "Status is required...", "", 1000);
+    if (this.button === 'Add User') {
+      requiredFields.push({ key: 'password', message: 'Password is required' });
     }
 
-    if (this.button === "Add User") {
-      this._adminService.addUser(this.user).subscribe({
-        next: (res: any) => {
-          this.toastService.showToast('success', "User Added Successfully...", "", 1000);
-          this.user = new UserModel();
-          this.getUser();
-          this._sharedService.triggerCountingCall();
-        },
-        error: err => {
-          this.errorMsg = err.message || "Server maintenance. Please try again later";
-          this.toastService.showAlert('error', '', this.errorMsg);
-        }
-      })
-
-    } else {
-      this._adminService.updateUser(this.user).subscribe({
-        next: (res: any) => {
-          this.user = new UserModel();
-          this.toastService.showToast('success', "User Updated Successfully...", "", 1000);
-          this.button = "Add User"
-          this.getUser();
-        },
-        error: err => {
-          this.errorMsg = err.message || "Server maintenance. Please try again later";
-          this.toastService.showAlert('error', '', this.errorMsg);
-        }
-      })
+    for (const field of requiredFields) {
+      if (!this.user[field.key]) {
+        this.toastService.showToast('error', field.message, "", 1000);
+        return;
+      }
     }
+
+    const isAddMode = this.button === "Add User";
+    const action$ = isAddMode
+      ? this._adminService.addUser(this.user)
+      : this._adminService.updateUser(this.user);
+
+    action$.subscribe({
+      next: () => {
+        this.toastService.showToast('success', isAddMode ? "User Added Successfully..." : "User Updated Successfully...", "", 1000);
+        this.user = new UserModel();
+        this.button = "Add User";
+        this.getUser();
+        this._sharedService.triggerCountingCall?.();
+      },
+      error: err => {
+        this.errorMsg = err.message || "Server maintenance. Please try again later";
+        this.toastService.showAlert('error', '', this.errorMsg);
+      }
+    });
   }
 
   editUser(index: any) {
