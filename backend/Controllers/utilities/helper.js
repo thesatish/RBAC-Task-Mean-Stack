@@ -1,4 +1,5 @@
 const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const encryptedPassword = async (password) => {
     try {
@@ -18,7 +19,8 @@ const generateToken = async (userData) => {
 
         return token;
     } catch (error) {
-        res.status(400).send(error.message);
+        console.log("error...", error);
+
     }
 }
 
