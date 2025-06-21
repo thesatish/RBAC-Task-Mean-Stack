@@ -103,13 +103,13 @@ export class AdminService {
 
   updateUser(user: UserModel): Observable<any> {
     return this._http
-      .patch<any>(this.userApi, user)
+      .patch<any>(this.authApi, user)
       .pipe(catchError(this.handleError));
   }
 
   deleteUser(user: UserModel): Observable<any> {
     return this._http
-      .patch<any>(`${this.userApi}/delete`, user)
+      .patch<any>(`${this.authApi}/delete`, user)
       .pipe(catchError(this.handleError));
   }
 

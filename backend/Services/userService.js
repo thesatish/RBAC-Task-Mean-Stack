@@ -1,6 +1,9 @@
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require('../Models/userModel');
+const { encryptedPassword, generateToken } = require('../Controllers/utilities/helper');
+const AppError = require("../Controllers/utilities/errors");
+const { STATUS } = require('../Controllers/utilities/constant');
 
 
 const login = async (req) => {
@@ -9,7 +12,7 @@ const login = async (req) => {
     if (userData) {
         const truePassword = await bcryptjs.compare(password, userData.password);
         if (truePassword) {
-            
+
             const tokenData = await generateToken(userData);
             const userResult = {
                 _id: userData._id,
@@ -21,13 +24,15 @@ const login = async (req) => {
             }
 
             return { userResult, message: "User Login Success" };
+
         }
         else {
-            return { message: "Wrong Credential" };
+            throw new AppError("Wrong Credential", STATUS.BAD_REQUEST);
+
         }
     }
     else {
-        return { message: "Wrong Credential" };
+        throw new AppError("Wrong Credential", STATUS.BAD_REQUEST);
     }
 }
 
@@ -35,35 +40,13 @@ const register = async (req) => {
     req.body.password = await encryptedPassword(req.body.password);
     const userResult = await User.findOne({ emailId: req.body.emailId });
     if (userResult) {
-        return { message: "Email Already Exists" };
+        throw new AppError("Email Already Exists", STATUS.BAD_REQUEST);
     }
     else {
         const userInsert = await User.create(req.body);
         const tokenData = await generateToken(userInsert);
         userInsert.token = tokenData;
         return { userInsert, message: "User Registered Success" };
-    }
-}
-
-const generateToken = async (userData) => {
-    try {
-        const token = await jwt.sign(
-            { userId: userData._id, role: userData.role._id },
-            process.env.SECRET_KEY);
-
-        return token;
-    } catch (error) {
-        res.status(400).send(error.message);
-    }
-}
-
-const encryptedPassword = async (password) => {
-    try {
-        const hashPass = await bcryptjs.hash(password, 10);
-        return hashPass;
-
-    } catch (error) {
-        console.log("error...", error);
     }
 }
 

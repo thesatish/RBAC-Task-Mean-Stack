@@ -63,14 +63,13 @@ export class UserManagementComponent {
       }
     }
 
-    const isAddMode = this.button === "Add User";
-    const action$ = isAddMode
+    const action = this.button === "Add User"
       ? this._adminService.addUser(this.user)
       : this._adminService.updateUser(this.user);
 
-    action$.subscribe({
-      next: () => {
-        this.toastService.showToast('success', isAddMode ? "User Added Successfully..." : "User Updated Successfully...", "", 1000);
+    action.subscribe({
+      next: (res) => {
+        this.toastService.showToast('success', res.data.message, "", 1000);
         this.user = new UserModel();
         this.button = "Add User";
         this.getUser();

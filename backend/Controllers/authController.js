@@ -7,19 +7,19 @@ const { getAllWithPagination, updateOne, deleteOne } = require('../Services/auth
 const fetchAllUsers = handleAsync(async (req, res) => {
     const response = await getAllWithPagination(req);
     if (!response) throw new AppError(response.message, STATUS.BAD_REQUEST);
-    return { status: STATUS.CREATED, data : response};
+    return { status: STATUS.OK, data : response};
 });
 
 const updatUser = handleAsync(async (req, res) => {
     const response = await updateOne(req);
     if (!response) throw new AppError(response.message, STATUS.BAD_REQUEST);
-    return { status: STATUS.CREATED, message: response.message, data: response.result };
+    return { status: STATUS.OK, message: response.message, data: response.result };
 });
 
 const deleteUser = handleAsync(async (req, res) => {
     const response = await deleteOne(req);
     if (!response) throw new AppError(response.message, STATUS.BAD_REQUEST);
-    return { status: STATUS.CREATED, message: response.message, data: response.result };
+    return { status: STATUS.OK, message: response.message, data: response.result };
 });
 
 

@@ -1,5 +1,7 @@
 const User = require('../Models/userModel');
-
+const { encryptedPassword } = require('../Controllers/utilities/helper')
+const AppError = require("../Controllers/utilities/errors");
+const { STATUS } = require('../Controllers/utilities/constant');
 
 const getAllWithPagination = async (req) => {
     let { page = 1, limit = 100, isDeleted, startDate, endDate } = req.query
@@ -26,7 +28,7 @@ const getAllWithPagination = async (req) => {
 
 
     let recordsTotal = await User.countDocuments(filter);
-    const getAllUsers = await User.find(filter).populate("role", "-code")
+    const getAllUsers = await User.find(filter).select('-password').populate("role", "-code")
         .skip((currentPage - 1) * limitParsed).limit(limitParsed).lean();
     return {
         total_pages: Math.ceil(recordsTotal / limit),
@@ -34,16 +36,29 @@ const getAllWithPagination = async (req) => {
         current_page: currentPage,
         per_page: limitParsed,
         result: getAllUsers,
-        message: "Task Fetched Successfully"
+        message: "User Fetched Successfully"
     };
 
 }
+    const updateOne = async (req) => {
+    const { _id, password, emailId, ...restData } = req.body;
 
-const updateOne = async (req) => {
+    if (password) {
+        restData.password = await encryptedPassword(password);
+    }
+
+    const exist = await User.findOne({ _id: { $ne: _id }, emailId });
+    if (exist) throw new AppError("Email ID already exists", STATUS.BAD_REQUEST);
+
     const result = await User.findOneAndUpdate(
-        { _id: req.body._id }, { $set: req.body }, { new: true });
+        { _id },
+        { $set: { emailId, ...restData } },
+        { new: true }
+    );
+
     return { result, message: "User Updated Successfully" };
-}
+    };
+
 
 const deleteOne = async (req) => {
     const result = await User.findOneAndUpdate(
