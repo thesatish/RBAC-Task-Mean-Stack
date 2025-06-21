@@ -19,4 +19,5 @@ export class UserModel {
     gender: string = "";
     status: string = "";
     role: string = "";
+    password : string = "";
 }

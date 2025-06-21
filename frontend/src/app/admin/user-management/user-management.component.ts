@@ -27,6 +27,7 @@ export class UserManagementComponent {
   perPage: number = 25;
   totalPages: number = 1;
   roleList: any[] = [];
+  showPassword = false;
 
   constructor(
     private toastService: ToastService,
@@ -197,6 +198,10 @@ export class UserManagementComponent {
     //       this.getTask();
     //     }
     //   });
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 
   handlePageChange(page: number) {

@@ -35,6 +35,23 @@
             </div>
 
             <div class="col-12 col-md-6 col-lg-3">
+            <label class="form-label">
+                <span class="text-danger">*</span> Password
+            </label>
+            <div class="input-group">
+                <input 
+                [type]="showPassword ? 'text' : 'password'" 
+                class="form-control" 
+                placeholder="Enter Password" 
+                [(ngModel)]="user.password"
+                />
+                <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()" tabindex="-1">
+                <i class="{{ showPassword ? 'fas fa-eye-slash' : 'fas fa-eye' }}"></i>
+                </button>
+            </div>
+            </div>
+
+            <div class="col-12 col-md-6 col-lg-3">
                 <label class="form-label"><span class="text-danger">*</span> Status</label>
                 <select class="form-select" [(ngModel)]="user.status">
                     <option value="">Select Status</option>

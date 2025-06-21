@@ -9,7 +9,7 @@ exports.registerSchema = Joi.object({
     password: Joi.string()
         .min(8)
         .pattern(/^(?=.*[A-Z])(?=.*[!@#$%^&*])/)
-        // .required()
+        .required()
         .messages({
             'string.pattern.base': 'Password must contain at least one uppercase letter and one special character.',
             'string.min': 'Password must be at least 8 characters long.'
