@@ -84,6 +84,8 @@ export class UserManagementComponent {
 
   editUser(index: any) {
     this.user = this.userList[index];
+    const roleId:any = this.user.role
+    this.user.role = roleId._id
     this.editUserData = true;
     this.button = "Update User";
   }
