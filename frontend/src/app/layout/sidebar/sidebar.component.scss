@@ -13,15 +13,18 @@
 
 .sidebar.open {
   left: 0;
+  overflow-x: scroll;
 }
 
 
 @media (min-width: 768px) {
   .sidebar {
     left: 0 !important;
-    position: relative;
-    top: 0;
-    // height: 100vh;
+      position: sticky;
+      top: 0px;
+      height: 100vh;
+      padding-top: 20px;
+      overflow-x: hidden;
   }
 }
 
@@ -60,6 +63,7 @@
   align-items: center;
   gap: 10px;
   cursor: pointer;
+  width:205px;
   transition: background 0.2s;
 }
 
