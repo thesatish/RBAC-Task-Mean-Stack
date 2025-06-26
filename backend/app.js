@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const mainRouter = require('./Routes/mainRouter');
 const publicRouter = require('./Routes/publicRouter');
 const authenticateToken = require('./Middleware/auth');
-require('./Controllers/utilities/redis')
+// require('./Controllers/utilities/redis')
 
 require("./config/database");
 var cors = require('cors');
